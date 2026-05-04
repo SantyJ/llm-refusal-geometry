@@ -1,0 +1,246 @@
+<mxfile host="app.diagrams.net" version="21.0">
+  <diagram name="LLM Refusal Geometry — System Architecture" id="arch001">
+    <mxGraphModel dx="1422" dy="762" grid="0" gridSize="10" guides="0" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="1200" pageHeight="950" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <!-- ═══════════════════════════════════════════════════ -->
+        <!-- STAGE BACKGROUND BANDS                             -->
+        <!-- ═══════════════════════════════════════════════════ -->
+
+        <mxCell id="bg1" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#EBF5FB;strokeColor=#AED6F1;opacity=40;" vertex="1" parent="1">
+          <mxGeometry x="10" y="10" width="860" height="115" as="geometry" />
+        </mxCell>
+        <mxCell id="lbl1" value="DATA SOURCES" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;whiteSpace=wrap;fontStyle=1;fontSize=9;fontColor=#1A5276;" vertex="1" parent="1">
+          <mxGeometry x="18" y="14" width="120" height="18" as="geometry" />
+        </mxCell>
+
+        <mxCell id="bg2" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#EAFAF1;strokeColor=#ABEBC6;opacity=40;" vertex="1" parent="1">
+          <mxGeometry x="10" y="138" width="860" height="145" as="geometry" />
+        </mxCell>
+        <mxCell id="lbl2" value="FEATURE EXTRACTION" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;whiteSpace=wrap;fontStyle=1;fontSize=9;fontColor=#1E8449;" vertex="1" parent="1">
+          <mxGeometry x="18" y="142" width="140" height="18" as="geometry" />
+        </mxCell>
+
+        <mxCell id="bg3" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FEF9E7;strokeColor=#F9E79F;opacity=40;" vertex="1" parent="1">
+          <mxGeometry x="10" y="296" width="860" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="lbl3" value="DIRECTION EXTRACTION" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;whiteSpace=wrap;fontStyle=1;fontSize=9;fontColor=#7D6608;" vertex="1" parent="1">
+          <mxGeometry x="18" y="300" width="150" height="18" as="geometry" />
+        </mxCell>
+
+        <mxCell id="bg4" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#F5EEF8;strokeColor=#D2B4DE;opacity=40;" vertex="1" parent="1">
+          <mxGeometry x="10" y="419" width="860" height="280" as="geometry" />
+        </mxCell>
+        <mxCell id="lbl4" value="ANALYSIS &amp; INTERVENTIONS" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;whiteSpace=wrap;fontStyle=1;fontSize=9;fontColor=#6C3483;" vertex="1" parent="1">
+          <mxGeometry x="18" y="423" width="170" height="18" as="geometry" />
+        </mxCell>
+
+        <mxCell id="bg5" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FDEDEC;strokeColor=#F1948A;opacity=40;" vertex="1" parent="1">
+          <mxGeometry x="10" y="712" width="860" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="lbl5" value="KEY RESULTS" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;whiteSpace=wrap;fontStyle=1;fontSize=9;fontColor=#922B21;" vertex="1" parent="1">
+          <mxGeometry x="18" y="716" width="100" height="18" as="geometry" />
+        </mxCell>
+
+        <!-- ═══════════════════════════════════════════════════ -->
+        <!-- STAGE 1: DATA SOURCES                              -->
+        <!-- ═══════════════════════════════════════════════════ -->
+
+        <mxCell id="d1" value="&lt;b&gt;Harmful&lt;/b&gt;&lt;br&gt;100 prompts&lt;br&gt;(JailbreakBench)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;arcSize=12;" vertex="1" parent="1">
+          <mxGeometry x="60" y="35" width="170" height="70" as="geometry" />
+        </mxCell>
+
+        <mxCell id="d2" value="&lt;b&gt;Medical&lt;/b&gt;&lt;br&gt;100 prompts&lt;br&gt;(custom synthetic)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;arcSize=12;" vertex="1" parent="1">
+          <mxGeometry x="345" y="35" width="170" height="70" as="geometry" />
+        </mxCell>
+
+        <mxCell id="d3" value="&lt;b&gt;Legal&lt;/b&gt;&lt;br&gt;100 prompts&lt;br&gt;(custom synthetic)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;arcSize=12;" vertex="1" parent="1">
+          <mxGeometry x="630" y="35" width="170" height="70" as="geometry" />
+        </mxCell>
+
+        <!-- ═══════════════════════════════════════════════════ -->
+        <!-- STAGE 2: FEATURE EXTRACTION                        -->
+        <!-- ═══════════════════════════════════════════════════ -->
+
+        <mxCell id="m1" value="&lt;b&gt;Llama-2-7B-Chat (4-bit NF4 quantized)&lt;/b&gt;&lt;br&gt;Full forward pass — hidden states extracted at Layer 16 (4096-dim)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;arcSize=5;" vertex="1" parent="1">
+          <mxGeometry x="155" y="163" width="570" height="55" as="geometry" />
+        </mxCell>
+
+        <mxCell id="m2" value="&lt;b&gt;Classify responses:&lt;/b&gt;  refused  /  answered&lt;br&gt;H_refused, H_answered  &#8712; &#8477;&lt;sup&gt;n&times;4096&lt;/sup&gt;  per domain" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;arcSize=5;" vertex="1" parent="1">
+          <mxGeometry x="155" y="248" width="570" height="55" as="geometry" />
+        </mxCell>
+
+        <!-- ═══════════════════════════════════════════════════ -->
+        <!-- STAGE 3: DIRECTION EXTRACTION                      -->
+        <!-- ═══════════════════════════════════════════════════ -->
+
+        <mxCell id="e1" value="&lt;b&gt;Mean-Difference Direction&lt;/b&gt;&lt;br&gt;v_d = normalize(&#956;_refuse &#8722; &#956;_answer)&lt;br&gt;&lt;i&gt;1 vector per domain (4096-dim)&lt;/i&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;arcSize=10;" vertex="1" parent="1">
+          <mxGeometry x="40" y="318" width="245" height="75" as="geometry" />
+        </mxCell>
+
+        <mxCell id="e2" value="&lt;b&gt;SVD Decomposition&lt;/b&gt;&lt;br&gt;U_d = top-8 left singular vectors&lt;br&gt;&lt;i&gt;eff_rank = exp(&#8722;&#8721; p_i log p_i)&lt;/i&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;arcSize=10;" vertex="1" parent="1">
+          <mxGeometry x="595" y="318" width="245" height="75" as="geometry" />
+        </mxCell>
+
+        <!-- ═══════════════════════════════════════════════════ -->
+        <!-- STAGE 4: ANALYSIS & INTERVENTIONS                  -->
+        <!-- ═══════════════════════════════════════════════════ -->
+
+        <!-- ── Geometric Analysis (left column) ── -->
+        <mxCell id="lbl_geo" value="Geometric Analysis" style="text;html=1;strokeColor=none;fillColor=none;align=center;fontStyle=1;fontSize=10;fontColor=#6C3483;" vertex="1" parent="1">
+          <mxGeometry x="30" y="442" width="220" height="20" as="geometry" />
+        </mxCell>
+
+        <mxCell id="g1" value="&lt;b&gt;Cosine Similarity Heatmap&lt;/b&gt;&lt;br&gt;&lt;i&gt;cos(v_harm, v_med) &#8776; &#8722;0.04 &amp;nbsp;&#8594;&amp;nbsp; independent&lt;/i&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=10;arcSize=10;" vertex="1" parent="1">
+          <mxGeometry x="30" y="467" width="220" height="55" as="geometry" />
+        </mxCell>
+
+        <mxCell id="g2" value="&lt;b&gt;Scree Plots + Effective Rank&lt;/b&gt;&lt;br&gt;&lt;i&gt;Harmful=1.12 &amp;nbsp;|&amp;nbsp; Medical=31 &amp;nbsp;|&amp;nbsp; Legal=26&lt;/i&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=10;arcSize=10;" vertex="1" parent="1">
+          <mxGeometry x="30" y="538" width="220" height="55" as="geometry" />
+        </mxCell>
+
+        <mxCell id="g3" value="&lt;b&gt;Principal Angles (Grassmann)&lt;/b&gt;&lt;br&gt;&lt;i&gt;Mean angles 63&#176;&#8211;72&#176; &amp;nbsp;&#8594;&amp;nbsp; subspaces independent&lt;/i&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=10;arcSize=10;" vertex="1" parent="1">
+          <mxGeometry x="30" y="609" width="220" height="55" as="geometry" />
+        </mxCell>
+
+        <!-- ── Bootstrap (centre) ── -->
+        <mxCell id="bs" value="&lt;b&gt;Bootstrap Stability&lt;/b&gt;&lt;br&gt;10&#215; 80% resampling&lt;br&gt;&lt;i&gt;mean cos sim &#8776; 0.92&#8211;0.93&lt;/i&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=10;arcSize=10;" vertex="1" parent="1">
+          <mxGeometry x="320" y="538" width="220" height="70" as="geometry" />
+        </mxCell>
+
+        <!-- ── Causal Interventions (right column) ── -->
+        <mxCell id="lbl_caus" value="Causal Interventions" style="text;html=1;strokeColor=none;fillColor=none;align=center;fontStyle=1;fontSize=10;fontColor=#922B21;" vertex="1" parent="1">
+          <mxGeometry x="620" y="442" width="220" height="20" as="geometry" />
+        </mxCell>
+
+        <mxCell id="c1" value="&lt;b&gt;Single Vector Ablation (&#945; sweep)&lt;/b&gt;&lt;br&gt;&lt;i&gt;x&#8242; = x &#8722; &#945;(x&#183;v_d)v_d &amp;nbsp;|&amp;nbsp; &#945; = 0.0&#8211;1.0&lt;/i&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=10;arcSize=10;" vertex="1" parent="1">
+          <mxGeometry x="620" y="467" width="220" height="55" as="geometry" />
+        </mxCell>
+
+        <mxCell id="c2" value="&lt;b&gt;Subspace Ablation (&#945; sweep)&lt;/b&gt;&lt;br&gt;&lt;i&gt;x&#8242; = x &#8722; &#945; &#183; U_d &#183; U_d&#7488; &#183; x&lt;/i&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=10;arcSize=10;" vertex="1" parent="1">
+          <mxGeometry x="620" y="538" width="220" height="55" as="geometry" />
+        </mxCell>
+
+        <mxCell id="c3" value="&lt;b&gt;Activation Patching (AIE)&lt;/b&gt;&lt;br&gt;&lt;i&gt;Layers 10&#8211;21 &#215; 32 heads &amp;nbsp;|&amp;nbsp; N=5 prompts&lt;/i&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=10;arcSize=10;" vertex="1" parent="1">
+          <mxGeometry x="620" y="609" width="220" height="55" as="geometry" />
+        </mxCell>
+
+        <mxCell id="c4" value="&lt;b&gt;Cross-Domain Transfer + Injection&lt;/b&gt;&lt;br&gt;&lt;i&gt;Inject v_source &#8594; target domain &amp;nbsp;|&amp;nbsp; TE=0%&lt;/i&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=10;arcSize=10;" vertex="1" parent="1">
+          <mxGeometry x="620" y="678" width="220" height="55" as="geometry" />
+        </mxCell>
+
+        <!-- ═══════════════════════════════════════════════════ -->
+        <!-- STAGE 5: KEY RESULTS                               -->
+        <!-- ═══════════════════════════════════════════════════ -->
+
+        <mxCell id="r1" value="&lt;b&gt;Refusal Curves&lt;/b&gt;&lt;br&gt;&lt;i&gt;subspace fixes concept erasure&lt;/i&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f4cccc;strokeColor=#cc0000;fontSize=10;arcSize=10;" vertex="1" parent="1">
+          <mxGeometry x="20" y="733" width="168" height="55" as="geometry" />
+        </mxCell>
+
+        <mxCell id="r2" value="&lt;b&gt;PPL Contrast&lt;/b&gt;&lt;br&gt;&lt;i&gt;harmful=1656 vs med=12&lt;/i&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f4cccc;strokeColor=#cc0000;fontSize=10;arcSize=10;" vertex="1" parent="1">
+          <mxGeometry x="203" y="733" width="168" height="55" as="geometry" />
+        </mxCell>
+
+        <mxCell id="r3" value="&lt;b&gt;Safety-Utility Pareto&lt;/b&gt;&lt;br&gt;&lt;i&gt;&#945;* &#8776; 0.4&#8211;0.6 med, 0.7&#8211;0.8 legal&lt;/i&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f4cccc;strokeColor=#cc0000;fontSize=10;arcSize=10;" vertex="1" parent="1">
+          <mxGeometry x="386" y="733" width="168" height="55" as="geometry" />
+        </mxCell>
+
+        <mxCell id="r4" value="&lt;b&gt;Bootstrap Stability&lt;/b&gt;&lt;br&gt;&lt;i&gt;cos sim &#8776; 0.92 &amp;nbsp;|&amp;nbsp; stable directions&lt;/i&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f4cccc;strokeColor=#cc0000;fontSize=10;arcSize=10;" vertex="1" parent="1">
+          <mxGeometry x="569" y="733" width="168" height="55" as="geometry" />
+        </mxCell>
+
+        <mxCell id="r5" value="&lt;b&gt;AIE Heatmap&lt;/b&gt;&lt;br&gt;&lt;i&gt;causal heads in layers 19&#8211;21&lt;/i&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f4cccc;strokeColor=#cc0000;fontSize=10;arcSize=10;" vertex="1" parent="1">
+          <mxGeometry x="702" y="733" width="150" height="55" as="geometry" />
+        </mxCell>
+
+        <!-- ═══════════════════════════════════════════════════ -->
+        <!-- ARROWS                                             -->
+        <!-- ═══════════════════════════════════════════════════ -->
+
+        <!-- Data → Model -->
+        <mxCell id="a1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;exitX=0.5;exitY=1;entryX=0.25;entryY=0;" edge="1" source="d1" target="m1" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="a2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" source="d2" target="m1" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="a3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;exitX=0.5;exitY=1;entryX=0.75;entryY=0;" edge="1" source="d3" target="m1" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- Model → Hidden states -->
+        <mxCell id="a4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;" edge="1" source="m1" target="m2" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- Hidden states → Mean-diff + SVD -->
+        <mxCell id="a5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;exitX=0.2;exitY=1;entryX=0.5;entryY=0;" edge="1" source="m2" target="e1" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="a6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;exitX=0.8;exitY=1;entryX=0.5;entryY=0;" edge="1" source="m2" target="e2" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- Mean-diff → Geometric + Bootstrap -->
+        <mxCell id="a7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" source="e1" target="g1" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="a8" style="edgeStyle=orthogonalEdgeStyle;rounded=0;exitX=0.8;exitY=1;entryX=0.2;entryY=0;" edge="1" source="e1" target="bs" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- SVD → Geo (principal angles) + Causal -->
+        <mxCell id="a9" style="edgeStyle=orthogonalEdgeStyle;rounded=0;exitX=0.2;exitY=1;entryX=0.5;entryY=0;" edge="1" source="e2" target="g3" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="a10" style="edgeStyle=orthogonalEdgeStyle;rounded=0;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" source="e2" target="c1" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- Mean-diff also connects to single vector ablation -->
+        <mxCell id="a10b" style="edgeStyle=orthogonalEdgeStyle;rounded=0;exitX=1;exitY=0.5;entryX=0;entryY=0.5;dashed=1;" edge="1" source="e1" target="c1" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- Geometric internal arrows -->
+        <mxCell id="a11" style="edgeStyle=orthogonalEdgeStyle;rounded=0;" edge="1" source="g1" target="g2" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="a12" style="edgeStyle=orthogonalEdgeStyle;rounded=0;" edge="1" source="g2" target="g3" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- Causal internal arrows -->
+        <mxCell id="a13" style="edgeStyle=orthogonalEdgeStyle;rounded=0;" edge="1" source="c1" target="c2" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="a14" style="edgeStyle=orthogonalEdgeStyle;rounded=0;" edge="1" source="c2" target="c3" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="a15" style="edgeStyle=orthogonalEdgeStyle;rounded=0;" edge="1" source="c3" target="c4" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- To results -->
+        <mxCell id="a16" style="edgeStyle=orthogonalEdgeStyle;rounded=0;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" source="c2" target="r1" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="a17" style="edgeStyle=orthogonalEdgeStyle;rounded=0;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" source="c2" target="r2" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="a18" style="edgeStyle=orthogonalEdgeStyle;rounded=0;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" source="c2" target="r3" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="a19" style="edgeStyle=orthogonalEdgeStyle;rounded=0;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" source="bs" target="r4" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="a20" style="edgeStyle=orthogonalEdgeStyle;rounded=0;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" source="c3" target="r5" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
