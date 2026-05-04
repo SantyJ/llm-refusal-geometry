@@ -1,0 +1,14 @@
+{
+  "harmful": {
+    "refused": 98,
+    "answered": 2
+  },
+  "medical": {
+    "refused": 48,
+    "answered": 52
+  },
+  "legal": {
+    "refused": 63,
+    "answered": 37
+  }
+}

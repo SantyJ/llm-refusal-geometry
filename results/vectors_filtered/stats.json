@@ -1,0 +1,10 @@
+{
+  "medical": {
+    "refused": 48,
+    "answered": 52
+  },
+  "legal": {
+    "refused": 50,
+    "answered": 50
+  }
+}

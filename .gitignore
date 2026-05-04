@@ -1,0 +1,21 @@
+# Hidden states (large numpy files)
+results/vectors/hiddens_*.npz
+
+# HuggingFace model cache
+.hf_home/
+
+# macOS
+.DS_Store
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+
+# Logs (large, not needed)
+logs/
+
+# Jupyter
+.ipynb_checkpoints/

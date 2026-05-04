@@ -1,0 +1,106 @@
+{
+  "v_harmful\u2192medical": {
+    "sweep": [
+      {
+        "alpha": 0.0,
+        "refusal_rate": 45.0
+      },
+      {
+        "alpha": 0.5,
+        "refusal_rate": 45.0
+      },
+      {
+        "alpha": 1.0,
+        "refusal_rate": 45.0
+      },
+      {
+        "alpha": 1.5,
+        "refusal_rate": 45.0
+      },
+      {
+        "alpha": 2.0,
+        "refusal_rate": 45.0
+      }
+    ],
+    "baseline": 45.0,
+    "transfer_effectiveness": 0.0
+  },
+  "v_harmful\u2192legal": {
+    "sweep": [
+      {
+        "alpha": 0.0,
+        "refusal_rate": 75.0
+      },
+      {
+        "alpha": 0.5,
+        "refusal_rate": 75.0
+      },
+      {
+        "alpha": 1.0,
+        "refusal_rate": 75.0
+      },
+      {
+        "alpha": 1.5,
+        "refusal_rate": 75.0
+      },
+      {
+        "alpha": 2.0,
+        "refusal_rate": 75.0
+      }
+    ],
+    "baseline": 75.0,
+    "transfer_effectiveness": 0.0
+  },
+  "v_medical\u2192harmful": {
+    "sweep": [
+      {
+        "alpha": 0.0,
+        "refusal_rate": 100.0
+      },
+      {
+        "alpha": 0.5,
+        "refusal_rate": 100.0
+      },
+      {
+        "alpha": 1.0,
+        "refusal_rate": 100.0
+      },
+      {
+        "alpha": 1.5,
+        "refusal_rate": 100.0
+      },
+      {
+        "alpha": 2.0,
+        "refusal_rate": 100.0
+      }
+    ],
+    "baseline": 100.0,
+    "transfer_effectiveness": 0.0
+  },
+  "v_legal\u2192harmful": {
+    "sweep": [
+      {
+        "alpha": 0.0,
+        "refusal_rate": 100.0
+      },
+      {
+        "alpha": 0.5,
+        "refusal_rate": 100.0
+      },
+      {
+        "alpha": 1.0,
+        "refusal_rate": 100.0
+      },
+      {
+        "alpha": 1.5,
+        "refusal_rate": 100.0
+      },
+      {
+        "alpha": 2.0,
+        "refusal_rate": 100.0
+      }
+    ],
+    "baseline": 100.0,
+    "transfer_effectiveness": 0.0
+  }
+}

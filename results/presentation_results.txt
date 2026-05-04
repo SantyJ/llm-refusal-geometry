@@ -1,0 +1,415 @@
+================================================================================
+MECHANISTIC INTERPRETABILITY OF LLM JAILBREAKS
+Final Project Results — Santhosh Janakiraman (sj1230) & Harsha Rajendra (hr458)
+CS 16:198:671 — Interpretable & Explainable AI
+Model: Llama-2-7B-Chat (4-bit quantized, NF4)  |  Layer 16 hidden states (4096-dim)
+================================================================================
+
+
+================================================================================
+CORE RESEARCH QUESTION
+================================================================================
+Does LLM refusal behavior decompose into domain-specific directions in hidden
+state space, and can we surgically reduce over-refusal without compromising
+general safety?
+
+
+================================================================================
+PART 1: MIDTERM RESULTS (Foundation)
+================================================================================
+
+------------------------------------------------------------------------
+RESULT 1: Baseline Refusal Rates (after dataset cleaning)
+------------------------------------------------------------------------
+Domain      Prompts  Refused  Answered  Refusal Rate
+Harmful       100       98        2         98%
+Medical       100       48       52         48%
+Legal         100       63       37         63%
+
+Note: Legal prompts were refined from ambiguous "edge case" prompts to
+clearly illegal requests (counterfeiting, fraud, bribery, laundering).
+This improved legal refusal rate from ~56% to 63%.
+
+Key insight: Medical and legal domains show significant OVER-REFUSAL baseline
+even before any ablation — the model refuses nearly half of legitimate
+medical questions.
+
+------------------------------------------------------------------------
+RESULT 2: Mean-Difference Direction Extraction
+------------------------------------------------------------------------
+For each domain, we extract a direction vector:
+  v_d = normalize( mean(H_refused) - mean(H_answered) )
+  where H = hidden states at layer 16 across all prompts
+
+Extracted vectors: v_harmful, v_medical, v_legal (each 4096-dimensional)
+
+------------------------------------------------------------------------
+RESULT 3: Cosine Similarity Between Direction Vectors (Single Vectors)
+------------------------------------------------------------------------
+Pair                    Cosine Similarity
+harmful ↔ medical          -0.037  (near zero)
+harmful ↔ legal             0.099  (near zero)
+medical ↔ legal             0.112  (near zero)
+
+Key insight: All pairwise cosine similarities are near zero → the three
+refusal directions are GEOMETRICALLY INDEPENDENT. Ablating one domain's
+refusal direction should not affect other domains.
+
+Plot: heatmap.png
+
+------------------------------------------------------------------------
+RESULT 4: Single Vector Ablation — Initial Results
+------------------------------------------------------------------------
+Ablation: x' = x - α*(x·v_d)*v_d  (projects out refusal direction)
+
+v_harmful ablation on harmful prompts:
+  α=0.0: 98% refusal (baseline)
+  α=0.5: 98% refusal (no change)
+  α=1.0:  0% refusal  ← complete elimination ✓
+
+v_medical ablation on medical prompts:
+  α=0.0: 48% refusal (baseline)
+  α=0.5: 56% refusal (INCREASED — wrong direction!)
+  α=1.0: 60% refusal (INCREASED further!)
+
+v_legal ablation on legal prompts:
+  α=0.0: 63% refusal (baseline, after dataset fix)
+  α=0.5: 52% refusal (mild decrease)
+  α=1.0: 50% refusal (mild decrease)
+
+Key insight: Single vector ablation WORKS for harmful (clean direction)
+but FAILS for medical (refusal INCREASES — concept erasure) and gives
+only marginal improvement for legal.
+
+Plot: refusal_rates_by_domain.png
+
+
+================================================================================
+PART 2: NEW RESULTS (Final Experiments)
+================================================================================
+
+------------------------------------------------------------------------
+RESULT 5: SVD Analysis — Why Single Vector Fails (Effective Rank)
+------------------------------------------------------------------------
+We compute SVD of the difference matrix: D = H_refused - mean(H_answered)
+Effective rank = exp(entropy of singular value distribution)
+  → Measures how many dimensions encode refusal behavior
+
+Domain    Effective Rank   Top-3 Singular Vectors Explain
+Harmful        1.12         98.6%  0.5%  0.1%   ← nearly 1-dimensional!
+Medical       31.35         15.0%  7.2%  6.7%   ← spread across 31+ dims
+Legal         26.14         23.5% 10.2%  8.1%   ← spread across 26+ dims
+
+Key insight: Harmful refusal is LOW-RANK (eff_rank ≈ 1) — a single
+direction captures 98.6% of variance. Medical/legal refusal is
+HIGH-RANK (eff_rank ≈ 26-31) — the refusal direction is entangled with
+domain knowledge across many dimensions. This MATHEMATICALLY EXPLAINS
+why single vector ablation causes concept erasure in medical: you can't
+separate refusal from domain knowledge with one vector.
+
+Plot: scree_plots.png
+
+------------------------------------------------------------------------
+RESULT 6: Principal Angles Between Domain Subspaces (Grassmann Geometry)
+------------------------------------------------------------------------
+We extract top-8 singular vectors per domain and compute principal angles
+between each pair of subspaces via SVD of the cross-Gram matrix.
+
+Subspace Pair         Principal Angles (degrees, top-5)        Mean
+harmful ↔ medical     33.8°  54.7°  64.0°  75.8°  83.9°       72.0°
+harmful ↔ legal       22.8°  48.3°  58.3°  69.2°  79.9°       67.9°
+medical ↔ legal       25.6°  38.5°  45.1°  67.7°  73.0°       63.0°
+
+Key insight: Angles range from ~23° to 84° (not all 90°, but far from 0°).
+The subspaces are substantially independent — no pair shares a dominant
+common direction. This extends the single-vector cosine similarity result
+(which only checked top directions) to the full multi-dimensional subspace.
+
+Plot: principal_angles.png
+
+------------------------------------------------------------------------
+RESULT 7: Subspace Ablation vs Single Vector — Full Alpha Sweep
+------------------------------------------------------------------------
+Subspace ablation: x' = x - α * U_d @ U_d.T @ x
+where U_d = top-8 left singular vectors from SVD
+
+MEDICAL DOMAIN (100 prompts):
+Alpha   Single Vector (refusal%)   Subspace k=8 (refusal%)   Single PPL   Subspace PPL
+0.0          48%                        48%                    10.12        10.12
+0.1          48%                        44%                    10.11        10.17
+0.2          48%                        40%                    10.09        10.22
+0.3          52%                        40%                    10.07        10.30
+0.4          54%                        36%                    10.04        10.42
+0.5          56%                        38%                    10.03        10.59
+0.6          56%                        40%                    10.01        10.85
+0.7          56%                        38%                    10.02        11.26
+0.8          58%                        34%                    10.01        11.75
+0.9          60%                        36%                    10.00        12.24
+1.0          60%                        28%                    10.00        12.77
+
+LEGAL DOMAIN (100 prompts):
+Alpha   Single Vector (refusal%)   Subspace k=8 (refusal%)   Single PPL   Subspace PPL
+0.0          70%                        70%                    10.12        10.12
+0.1          68%                        68%                    10.11        10.10
+0.2          68%                        70%                    10.11        10.08
+0.3          68%                        68%                    10.10        10.09
+0.4          66%                        68%                    10.10        10.13
+0.5          66%                        64%                    10.09        10.23
+0.6          66%                        56%                    10.09        10.36
+0.7          64%                        50%                    10.08        10.55
+0.8          64%                        48%                    10.08        10.76
+0.9          62%                        28%                    10.08        10.99
+1.0          62%                        18%                    10.08        11.20
+
+Key findings:
+  MEDICAL: Single vector causes CONCEPT ERASURE (refusal 48% → 60% at α=1.0).
+           Subspace ablation REDUCES refusal (48% → 28% at α=1.0). Fixed!
+  LEGAL:   Single vector gives marginal reduction (70% → 62%).
+           Subspace gives strong reduction (70% → 18% at α=1.0).
+
+  Tradeoff: Subspace ablation increases perplexity more than single vector.
+            Optimal alpha (α*) around 0.4-0.6 balances refusal reduction
+            with acceptable perplexity cost.
+
+Plots: refusal_vs_alpha.png (RECOMMENDED), pareto_clean.png, ablation_4panel.png
+
+------------------------------------------------------------------------
+RESULT 8: The Structural Contrast — Why Harmful Is Different
+------------------------------------------------------------------------
+Extending the alpha sweep to the HARMFUL domain reveals a critical asymmetry.
+Both single vector and subspace ablation were also run on harmful prompts.
+
+HARMFUL DOMAIN — Single Vector Ablation:
+  α=0.0:  98% refusal, PPL=10.12 (baseline)
+  α=0.5:  98% refusal, PPL=13.94
+  α=0.7:  98% refusal, PPL=90.87
+  α=0.9:  12% refusal, PPL=908.89
+  α=1.0:   0% refusal, PPL=1,656  ← model output is incoherent gibberish
+
+HARMFUL DOMAIN — Subspace Ablation (k=8):
+  α=0.0:  98% refusal, PPL=10.12 (baseline)
+  α=0.8:  84% refusal, PPL=9.10   (still safe)
+  α=0.9:  50% refusal, PPL=56.26
+  α=1.0:   0% refusal, PPL=5,265  ← complete language model breakdown
+
+Contrast with medical/legal at α=1.0:
+  Medical subspace:  28% refusal, PPL=12.77  (acceptable)
+  Legal subspace:    18% refusal, PPL=11.20  (acceptable)
+
+Key insight: Harmful refusal is STRUCTURALLY PROTECTED by the model's
+safety training. Removing it completely destroys coherence (PPL 1,600–5,200).
+Medical/legal over-refusal can be surgically removed with minimal coherence
+cost (PPL 11–13). This is the central argument for why subspace ablation is
+a SAFE intervention for over-refusal — it only works on the domains where
+the refusal is genuinely separable from core language capability.
+
+Plot: all_domains_contrast.png (RECOMMENDED — add to core slides after
+      Result 7 as the synthesis/conclusion slide)
+
+------------------------------------------------------------------------
+RESULT 9: Bootstrap Stability — Are Directions Reproducible?
+------------------------------------------------------------------------
+Method: 10× random 80% resampling of hidden states per domain.
+Compute direction from each subsample, measure cosine similarity to
+the original full-data direction.
+
+Domain     Mean Sim   Std     Min     Interpretation
+Harmful     0.913    0.166   0.443   High (2 outliers due to class imbalance*)
+Medical     0.922    0.021   0.869   Very stable ✓
+Legal       0.932    0.024   0.872   Very stable ✓
+
+*Harmful outliers explained: only 2 "answered" samples in harmful dataset.
+When one is dropped in 80% resample, mean(H_answered) shifts dramatically.
+Excluding outliers: harmful clean mean = 0.997 (near-perfect stability).
+
+Key insight: Refusal directions are STABLE across different prompt subsets —
+not artifacts of specific prompts. Medical and legal have tight distributions
+(std ≈ 0.02) well above the 0.90 stability threshold.
+
+Plots: bootstrap_bars.png (RECOMMENDED for slides), bootstrap_strip.png, bootstrap_lines.png
+
+------------------------------------------------------------------------
+RESULT 10: Activation Patching — Causal Head Identification
+------------------------------------------------------------------------
+Method: For each (layer, head) pair across layers 10–21 (12 layers × 32 heads):
+  1. Corrupt run: ablate v_harmful at layer 16 (model answers instead of refusing)
+  2. Clean run: same prompt with no ablation (model refuses)
+  3. Patched run: corrupt run + patch this head's output from clean run
+  4. AIE = P(refuse|patched) - P(refuse|corrupt)
+     High AIE → this head is causally responsible for refusal
+
+Results (N=5 prompts per head, layers 10–21):
+  Non-zero AIE heads: 5 total, all in layers 19–21
+  AIE resolution: 0.200 (= 1/5 prompts, minimum detectable effect)
+
+Top causal heads:
+  Layer 19, Head 0:  AIE=+0.200
+  Layer 19, Head 1:  AIE=+0.200
+  Layer 19, Head 7:  AIE=+0.200
+  Layer 19, Head 21: AIE=+0.200
+  Layer 21, Head 10: AIE=+0.200
+
+Key finding: Causal signal concentrates in LATE layers (19–21), not early
+or middle layers. Layers 10–18 show zero AIE — they carry information but
+are not causally decisive for refusal. This is consistent with the
+literature showing that safety-relevant computations happen in later
+transformer layers.
+
+Caveat: N=5 prompts per head gives coarse resolution (AIE granularity=0.2).
+A full 20-prompt run would give finer resolution but would take ~5× longer.
+This is marked as preliminary — qualitative pattern (late-layer causality)
+is reliable; exact head ranking requires more prompts.
+
+Plot: activation_patching_merged.png
+
+
+================================================================================
+ADDITIONAL RESULTS (Optional — Appendix)
+================================================================================
+
+------------------------------------------------------------------------
+ADDITIONAL 1: Injection Attack (Null Result — Supports Independence)
+------------------------------------------------------------------------
+Method: Add v_d to hidden states of benign prompts: h' = h + α*v_d
+Test: Does adding refusal direction force the model to refuse benign prompts?
+
+Result: 0% refusal rate at ALL alpha values (0.0 to 3.0) for all domains.
+The model continued answering "What is the capital of France?" normally
+even at α=3.0.
+
+Interpretation: Directions are DOMAIN-SPECIFIC — injecting a refusal vector
+does not transfer refusal intent to unrelated contexts. This is consistent
+with the independence finding (near-zero cosine similarities).
+Note: Possible decode offset artifact may have contributed to null result.
+
+Plot: injection_attack.png
+
+------------------------------------------------------------------------
+ADDITIONAL 2: Zero-Shot Safety Probe (Weak Signal)
+------------------------------------------------------------------------
+Method: Use score = h · v_harmful as a lightweight classifier.
+No training required — classify as harmful if score > threshold τ.
+
+Domain    AUC    Best F1   Notes
+Harmful   0.500   0.990   AUC=0.5 due to 98/2 class imbalance (trivial F1)
+Medical   0.459   0.649   Slightly worse than random
+Legal     0.641   0.773   Marginal signal
+
+Interpretation: v_harmful alone is NOT a reliable zero-shot classifier for
+medical/legal prompts — consistent with directions being geometrically
+independent. The dot product with v_harmful has no predictive power for
+whether a medical/legal prompt will be refused.
+
+Plots: zero_shot_roc.png, zero_shot_distributions.png
+
+------------------------------------------------------------------------
+ADDITIONAL 3: Alternative All-Domains Plots
+------------------------------------------------------------------------
+all_domains_refusal.png    — refusal rate vs alpha for all 3 domains side by side
+                             (single vs subspace panels). Shows concept erasure
+                             in medical (single panel) vs fix (subspace panel).
+all_domains_perplexity.png — PPL vs alpha on log scale for all 3 domains.
+                             Dramatically shows harmful PPL explosion vs flat
+                             medical/legal curves. Good standalone slide if you
+                             want to dedicate more time to the PPL story.
+
+Note: all_domains_contrast.png (promoted to Result 8 in core slides) combines
+both of these into one 2×2 panel and is the recommended single slide.
+
+------------------------------------------------------------------------
+ADDITIONAL 4: Cross-Domain Transfer
+------------------------------------------------------------------------
+Method: Inject v_source into hidden states of target domain prompts.
+Test whether refusal intent transfers across domains.
+
+Transfers being tested:
+  v_harmful → medical prompts   (does model treat medical as harmful?)
+  v_harmful → legal prompts     (does model treat legal as harmful?)
+  v_medical → harmful prompts   (does model treat harmful as medical?)
+  v_legal   → harmful prompts   (does model treat harmful as legal?)
+
+Transfer Effectiveness (TE) = max_refusal_rate(modified) - baseline_refusal_rate
+
+Results:
+  Transfer                  Baseline   Max    TE
+  v_harmful → medical         45%      45%   +0.0%
+  v_harmful → legal           75%      75%   +0.0%
+  v_medical → harmful        100%     100%   +0.0%
+  v_legal   → harmful        100%     100%   +0.0%
+
+Transfer Effectiveness = 0% across ALL transfers at all alphas (0.0–2.0).
+
+Key insight: Directions are completely DOMAIN-LOCKED. Injecting v_harmful into
+medical prompts does not increase medical refusal at all, and vice versa.
+This is the strongest possible confirmation of geometric independence —
+not just near-zero cosine similarity, but zero functional transfer.
+Supports the core independence claim from a causal (not just geometric) angle.
+
+Plot: cross_domain_transfer.png
+
+
+================================================================================
+FUTURE WORK
+================================================================================
+1. Cross-Model Validation — re-run on Mistral-7B or Qwen-7B. If same
+   effective rank pattern holds, it's a general architectural finding.
+
+2. Pre-RLHF vs Post-RLHF Comparison — compare direction vectors from
+   Llama-2 base (no safety training) vs Chat (RLHF). Does refusal
+   direction exist pre-RLHF? If yes, RLHF amplified it; if no, RLHF created it.
+
+3. Real-Time Jailbreak Detection — monitor h_t · v_harmful at each token
+   during generation. Flag when signal drops. Proactive safety intervention.
+
+4. Token-Level Analysis — probe accuracy across all token positions to
+   find where refusal decision is made. Is it at [/INST]? At harmful keyword?
+
+5. SAE Comparison — compare mean-difference/SVD approach vs Sparse
+   Autoencoder feature extraction for refusal characterization.
+
+
+================================================================================
+KEY NARRATIVE (10-min presentation order)
+================================================================================
+1. Problem: Standard benchmarks miss over-refusal on medical/legal domains
+2. Method: Extract mean-difference direction vectors at layer 16 (4096-dim)
+3. Finding 1: Vectors are geometrically independent (cosine sim ≈ 0)
+4. Finding 2: Single vector ablation works for harmful (eff_rank ≈ 1) but
+              CAUSES concept erasure for medical (eff_rank ≈ 31)
+5. Explanation: SVD shows harmful is 1-dimensional, medical/legal are 26-31 dim
+6. Fix: Subspace ablation (top-8 SVD vectors) reduces over-refusal without erasure
+7. Tradeoff: Pareto frontier — α* ≈ 0.4-0.6 balances safety vs utility
+8. Validation: Bootstrap confirms directions stable across prompt subsets
+9. (Bonus) Activation patching: which specific attention heads cause refusal
+10. Conclusion: Refusal mechanism is domain-decomposable; subspace ablation
+                enables targeted, surgical reduction of over-refusal
+
+================================================================================
+PLOTS REFERENCE
+================================================================================
+CORE SLIDES (use these):
+  refusal_rates_by_domain.png     — Midterm: baseline refusal rates by domain
+  heatmap.png                     — Midterm: cosine similarity ≈ 0 (independence)
+  scree_plots.png                 — SVD effective rank (harmful=1.12, med=31, legal=26)
+  principal_angles.png            — Subspace independence via Grassmann geometry
+  refusal_vs_alpha.png            — Single vs subspace: concept erasure + fix
+  all_domains_contrast.png        — NEW: synthesis slide — harmful PPL=1656 vs
+                                    medical/legal PPL≈12 (structural difference)
+  pareto_clean.png                — Safety-utility Pareto frontier
+  bootstrap_bars.png              — Direction stability with error bars
+  activation_patching_merged.png  — 12×32 AIE heatmap (causal heads in L19-21)
+
+ADDITIONAL / APPENDIX:
+  ablation_4panel.png             — Full 2×2 panel: refusal + perplexity, both methods
+  all_domains_refusal.png         — All 3 domains refusal rate comparison
+  all_domains_perplexity.png      — All 3 domains PPL on log scale
+  bootstrap_strip.png             — Alternative bootstrap visualization
+  bootstrap_lines.png             — Bootstrap per-sample line chart
+  injection_attack.png            — Injection null result
+  zero_shot_roc.png               — Zero-shot probe ROC curves
+  zero_shot_distributions.png     — Score distribution by domain
+  cross_domain_transfer.png       — Transfer experiment (TE=0%, domain-locked)
+
+================================================================================
+END OF RESULTS DOCUMENT
+================================================================================

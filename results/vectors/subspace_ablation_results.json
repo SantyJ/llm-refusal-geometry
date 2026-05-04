@@ -1,0 +1,96 @@
+{
+  "legal": {
+    "none_alpha_0.0": {
+      "refusal_rate": 70.0,
+      "perplexity": 10.115538205738705
+    },
+    "single_alpha_0.0": {
+      "refusal_rate": 70.0,
+      "perplexity": 10.115538205738705
+    },
+    "single_alpha_0.1": {
+      "refusal_rate": 68.0,
+      "perplexity": 10.108401545810178
+    },
+    "single_alpha_0.2": {
+      "refusal_rate": 68.0,
+      "perplexity": 10.109717057327781
+    },
+    "single_alpha_0.3": {
+      "refusal_rate": 68.0,
+      "perplexity": 10.104686510485141
+    },
+    "single_alpha_0.4": {
+      "refusal_rate": 66.0,
+      "perplexity": 10.096834086996136
+    },
+    "single_alpha_0.5": {
+      "refusal_rate": 66.0,
+      "perplexity": 10.09366660469544
+    },
+    "single_alpha_0.6": {
+      "refusal_rate": 66.0,
+      "perplexity": 10.090140919177289
+    },
+    "single_alpha_0.7": {
+      "refusal_rate": 64.0,
+      "perplexity": 10.08435827361712
+    },
+    "single_alpha_0.8": {
+      "refusal_rate": 64.0,
+      "perplexity": 10.083085081740185
+    },
+    "single_alpha_0.9": {
+      "refusal_rate": 62.0,
+      "perplexity": 10.081107188687291
+    },
+    "single_alpha_1.0": {
+      "refusal_rate": 62.0,
+      "perplexity": 10.079965138373437
+    },
+    "subspace_alpha_0.0": {
+      "refusal_rate": 70.0,
+      "perplexity": 10.115538205738705
+    },
+    "subspace_alpha_0.1": {
+      "refusal_rate": 68.0,
+      "perplexity": 10.101060635877259
+    },
+    "subspace_alpha_0.2": {
+      "refusal_rate": 70.0,
+      "perplexity": 10.084421856878222
+    },
+    "subspace_alpha_0.3": {
+      "refusal_rate": 68.0,
+      "perplexity": 10.094192368825682
+    },
+    "subspace_alpha_0.4": {
+      "refusal_rate": 68.0,
+      "perplexity": 10.134647135380261
+    },
+    "subspace_alpha_0.5": {
+      "refusal_rate": 64.0,
+      "perplexity": 10.23267511910305
+    },
+    "subspace_alpha_0.6": {
+      "refusal_rate": 56.00000000000001,
+      "perplexity": 10.362646321129242
+    },
+    "subspace_alpha_0.7": {
+      "refusal_rate": 50.0,
+      "perplexity": 10.553772485478348
+    },
+    "subspace_alpha_0.8": {
+      "refusal_rate": 48.0,
+      "perplexity": 10.75883285075351
+    },
+    "subspace_alpha_0.9": {
+      "refusal_rate": 28.000000000000004,
+      "perplexity": 10.989310922018456
+    },
+    "subspace_alpha_1.0": {
+      "refusal_rate": 18.0,
+      "perplexity": 11.20402708000428
+    }
+  }
+}
