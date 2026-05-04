@@ -6,8 +6,10 @@ import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 
-VECTORS_DIR = "/workspace/results/vectors"
-PLOTS_DIR = "/workspace/results/plots"
+import os
+_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+VECTORS_DIR = os.path.join(_ROOT, "results", "vectors")
+PLOTS_DIR = os.path.join(_ROOT, "results", "plots")
 
 
 def load_vectors():

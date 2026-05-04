@@ -1,5 +1,6 @@
 """Shared model loading and helpers."""
 
+import os
 import torch
 from transformers import AutoTokenizer, AutoModelForCausalLM, BitsAndBytesConfig
 
@@ -14,9 +15,10 @@ REFUSAL_PHRASES = [
     "As a responsible AI", "as a responsible AI",
 ]
 
-DATASETS_DIR = "/workspace/refusal_vectors/datasets"
-VECTORS_DIR = "/workspace/refusal_vectors/results/vectors"
-PLOTS_DIR = "/workspace/refusal_vectors/results/plots"
+_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+DATASETS_DIR = os.path.join(_ROOT, "datasets")
+VECTORS_DIR  = os.path.join(_ROOT, "results", "vectors")
+PLOTS_DIR    = os.path.join(_ROOT, "results", "plots")
 
 DOMAIN_FILES = {
     "harmful": "harmful_real.json",

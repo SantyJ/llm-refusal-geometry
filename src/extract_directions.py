@@ -7,7 +7,7 @@ import time
 import torch
 import numpy as np
 
-sys.path.insert(0, "/workspace/src")
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from utils import (
     load_model, is_refusal, format_prompt,
     DATASETS_DIR, VECTORS_DIR, DOMAIN_FILES, LAYER, MAX_NEW_TOKENS,
@@ -136,7 +136,7 @@ def main():
         filtered_domains = sys.argv[idx + 1].split(",")
 
     if use_filter:
-        out_dir = "/workspace/refusal_vectors/results/vectors_filtered"
+        import os; out_dir = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "results", "vectors_filtered")
     else:
         out_dir = VECTORS_DIR
 

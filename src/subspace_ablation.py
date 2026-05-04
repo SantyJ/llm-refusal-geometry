@@ -30,7 +30,7 @@ import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 
-sys.path.insert(0, "/workspace/src")
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from utils import (
     load_model, is_refusal, format_prompt,
     DATASETS_DIR, VECTORS_DIR, PLOTS_DIR, LAYER, MAX_NEW_TOKENS, DOMAIN_FILES,
@@ -360,7 +360,13 @@ def main():
 
     model, tokenizer = load_model()
 
+    # Load existing results so parallel runs accumulate rather than overwrite
+    out_path = os.path.join(vectors_dir, "subspace_ablation_results.json")
     all_results = {}
+    if os.path.exists(out_path):
+        with open(out_path) as f:
+            all_results = json.load(f)
+
     for domain in target_domains:
         print(f"\n{'='*60}\nDomain: {domain}\n{'='*60}")
         all_results[domain] = sweep_domain(model, tokenizer, domain, vectors, subspaces)

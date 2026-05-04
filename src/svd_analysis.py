@@ -20,7 +20,7 @@ import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 
-sys.path.insert(0, "/workspace/src")
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from utils import VECTORS_DIR, PLOTS_DIR
 
 TOP_K = 8  # Number of singular vectors kept for subspace ablation

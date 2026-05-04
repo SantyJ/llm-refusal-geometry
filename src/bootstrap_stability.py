@@ -24,7 +24,7 @@ import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 
-sys.path.insert(0, "/workspace/src")
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from utils import VECTORS_DIR, PLOTS_DIR
 
 N_BOOTSTRAP = 10

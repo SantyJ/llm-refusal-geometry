@@ -8,8 +8,10 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import matplotlib.patches as mpatches
 
-VECTORS_DIR = "/workspace/refusal_vectors/results/vectors"
-PLOTS_DIR = "/workspace/refusal_vectors/results/plots"
+import os
+_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+VECTORS_DIR = os.path.join(_ROOT, "results", "vectors")
+PLOTS_DIR = os.path.join(_ROOT, "results", "plots")
 
 with open(os.path.join(VECTORS_DIR, "bootstrap_results.json")) as f:
     data = json.load(f)

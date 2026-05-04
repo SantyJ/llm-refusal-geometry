@@ -34,7 +34,7 @@ import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 
-sys.path.insert(0, "/workspace/src")
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from utils import (
     load_model, is_refusal, format_prompt,
     DATASETS_DIR, VECTORS_DIR, PLOTS_DIR, LAYER, MAX_NEW_TOKENS, DOMAIN_FILES,

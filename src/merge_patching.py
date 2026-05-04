@@ -7,8 +7,10 @@ import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 
-VECTORS_DIR = "/workspace/refusal_vectors/results/vectors"
-PLOTS_DIR   = "/workspace/refusal_vectors/results/plots"
+import os
+_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+VECTORS_DIR = os.path.join(_ROOT, "results", "vectors")
+PLOTS_DIR   = os.path.join(_ROOT, "results", "plots")
 N_HEADS = 32
 
 all_layers, all_aie = [], []

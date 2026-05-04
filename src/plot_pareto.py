@@ -1,15 +1,26 @@
 """Clean, slide-friendly Pareto frontier plots."""
 
 import os
+import json
 import numpy as np
 import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import matplotlib.patches as mpatches
 
-PLOTS_DIR = "/workspace/refusal_vectors/results/plots"
+_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+PLOTS_DIR   = os.path.join(_ROOT, "results", "plots")
+VECTORS_DIR = os.path.join(_ROOT, "results", "vectors")
 
-# Data extracted directly from logs
+# Load data from JSON (all 3 domains)
+with open(os.path.join(VECTORS_DIR, "subspace_ablation_results.json")) as f:
+    _raw = json.load(f)
+
+def _to_tuples(rows):
+    return [(r["alpha"], r["refusal_rate"], r["perplexity"]) for r in rows]
+
+data = {d: {m: _to_tuples(rows) for m, rows in methods.items()}
+        for d, methods in _raw.items()}
 data = {
     "medical": {
         "single": [

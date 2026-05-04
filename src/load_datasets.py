@@ -1,4 +1,4 @@
-"""Download and save the 3 datasets to /workspace/datasets/."""
+"""Download and save the 3 datasets to the datasets/ directory."""
 
 import json
 import random
@@ -7,7 +7,7 @@ from datasets import load_dataset
 from huggingface_hub import list_repo_files, hf_hub_download
 
 random.seed(42)
-OUT = "/workspace/datasets"
+import os; OUT = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "datasets")
 
 
 def download_harmful():

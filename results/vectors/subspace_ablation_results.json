@@ -1,96 +1,350 @@
 {
+  "harmful": {
+    "single": [
+      {
+        "alpha": 0.0,
+        "refusal_rate": 98.0,
+        "perplexity": 10.12
+      },
+      {
+        "alpha": 0.1,
+        "refusal_rate": 98.0,
+        "perplexity": 9.98
+      },
+      {
+        "alpha": 0.2,
+        "refusal_rate": 98.0,
+        "perplexity": 9.97
+      },
+      {
+        "alpha": 0.3,
+        "refusal_rate": 98.0,
+        "perplexity": 10.22
+      },
+      {
+        "alpha": 0.4,
+        "refusal_rate": 98.0,
+        "perplexity": 10.85
+      },
+      {
+        "alpha": 0.5,
+        "refusal_rate": 98.0,
+        "perplexity": 13.94
+      },
+      {
+        "alpha": 0.6,
+        "refusal_rate": 98.0,
+        "perplexity": 26.95
+      },
+      {
+        "alpha": 0.7,
+        "refusal_rate": 98.0,
+        "perplexity": 90.87
+      },
+      {
+        "alpha": 0.8,
+        "refusal_rate": 76.0,
+        "perplexity": 340.61
+      },
+      {
+        "alpha": 0.9,
+        "refusal_rate": 12.0,
+        "perplexity": 908.89
+      },
+      {
+        "alpha": 1.0,
+        "refusal_rate": 0.0,
+        "perplexity": 1656.28
+      }
+    ],
+    "subspace": [
+      {
+        "alpha": 0.0,
+        "refusal_rate": 98.0,
+        "perplexity": 10.12
+      },
+      {
+        "alpha": 0.1,
+        "refusal_rate": 98.0,
+        "perplexity": 9.78
+      },
+      {
+        "alpha": 0.2,
+        "refusal_rate": 98.0,
+        "perplexity": 9.14
+      },
+      {
+        "alpha": 0.3,
+        "refusal_rate": 98.0,
+        "perplexity": 8.87
+      },
+      {
+        "alpha": 0.4,
+        "refusal_rate": 98.0,
+        "perplexity": 10.31
+      },
+      {
+        "alpha": 0.5,
+        "refusal_rate": 96.0,
+        "perplexity": 8.88
+      },
+      {
+        "alpha": 0.6,
+        "refusal_rate": 96.0,
+        "perplexity": 8.95
+      },
+      {
+        "alpha": 0.7,
+        "refusal_rate": 96.0,
+        "perplexity": 8.56
+      },
+      {
+        "alpha": 0.8,
+        "refusal_rate": 84.0,
+        "perplexity": 9.1
+      },
+      {
+        "alpha": 0.9,
+        "refusal_rate": 50.0,
+        "perplexity": 56.26
+      },
+      {
+        "alpha": 1.0,
+        "refusal_rate": 0.0,
+        "perplexity": 5264.55
+      }
+    ]
+  },
+  "medical": {
+    "single": [
+      {
+        "alpha": 0.0,
+        "refusal_rate": 48.0,
+        "perplexity": 10.12
+      },
+      {
+        "alpha": 0.1,
+        "refusal_rate": 48.0,
+        "perplexity": 10.11
+      },
+      {
+        "alpha": 0.2,
+        "refusal_rate": 48.0,
+        "perplexity": 10.09
+      },
+      {
+        "alpha": 0.3,
+        "refusal_rate": 52.0,
+        "perplexity": 10.07
+      },
+      {
+        "alpha": 0.4,
+        "refusal_rate": 54.0,
+        "perplexity": 10.04
+      },
+      {
+        "alpha": 0.5,
+        "refusal_rate": 56.0,
+        "perplexity": 10.03
+      },
+      {
+        "alpha": 0.6,
+        "refusal_rate": 56.0,
+        "perplexity": 10.01
+      },
+      {
+        "alpha": 0.7,
+        "refusal_rate": 56.0,
+        "perplexity": 10.02
+      },
+      {
+        "alpha": 0.8,
+        "refusal_rate": 58.0,
+        "perplexity": 10.01
+      },
+      {
+        "alpha": 0.9,
+        "refusal_rate": 60.0,
+        "perplexity": 10.0
+      },
+      {
+        "alpha": 1.0,
+        "refusal_rate": 60.0,
+        "perplexity": 10.0
+      }
+    ],
+    "subspace": [
+      {
+        "alpha": 0.0,
+        "refusal_rate": 48.0,
+        "perplexity": 10.12
+      },
+      {
+        "alpha": 0.1,
+        "refusal_rate": 44.0,
+        "perplexity": 10.17
+      },
+      {
+        "alpha": 0.2,
+        "refusal_rate": 40.0,
+        "perplexity": 10.22
+      },
+      {
+        "alpha": 0.3,
+        "refusal_rate": 40.0,
+        "perplexity": 10.3
+      },
+      {
+        "alpha": 0.4,
+        "refusal_rate": 36.0,
+        "perplexity": 10.42
+      },
+      {
+        "alpha": 0.5,
+        "refusal_rate": 38.0,
+        "perplexity": 10.59
+      },
+      {
+        "alpha": 0.6,
+        "refusal_rate": 40.0,
+        "perplexity": 10.85
+      },
+      {
+        "alpha": 0.7,
+        "refusal_rate": 38.0,
+        "perplexity": 11.26
+      },
+      {
+        "alpha": 0.8,
+        "refusal_rate": 34.0,
+        "perplexity": 11.75
+      },
+      {
+        "alpha": 0.9,
+        "refusal_rate": 36.0,
+        "perplexity": 12.24
+      },
+      {
+        "alpha": 1.0,
+        "refusal_rate": 28.0,
+        "perplexity": 12.77
+      }
+    ]
+  },
   "legal": {
-    "none_alpha_0.0": {
-      "refusal_rate": 70.0,
-      "perplexity": 10.115538205738705
-    },
-    "single_alpha_0.0": {
-      "refusal_rate": 70.0,
-      "perplexity": 10.115538205738705
-    },
-    "single_alpha_0.1": {
-      "refusal_rate": 68.0,
-      "perplexity": 10.108401545810178
-    },
-    "single_alpha_0.2": {
-      "refusal_rate": 68.0,
-      "perplexity": 10.109717057327781
-    },
-    "single_alpha_0.3": {
-      "refusal_rate": 68.0,
-      "perplexity": 10.104686510485141
-    },
-    "single_alpha_0.4": {
-      "refusal_rate": 66.0,
-      "perplexity": 10.096834086996136
-    },
-    "single_alpha_0.5": {
-      "refusal_rate": 66.0,
-      "perplexity": 10.09366660469544
-    },
-    "single_alpha_0.6": {
-      "refusal_rate": 66.0,
-      "perplexity": 10.090140919177289
-    },
-    "single_alpha_0.7": {
-      "refusal_rate": 64.0,
-      "perplexity": 10.08435827361712
-    },
-    "single_alpha_0.8": {
-      "refusal_rate": 64.0,
-      "perplexity": 10.083085081740185
-    },
-    "single_alpha_0.9": {
-      "refusal_rate": 62.0,
-      "perplexity": 10.081107188687291
-    },
-    "single_alpha_1.0": {
-      "refusal_rate": 62.0,
-      "perplexity": 10.079965138373437
-    },
-    "subspace_alpha_0.0": {
-      "refusal_rate": 70.0,
-      "perplexity": 10.115538205738705
-    },
-    "subspace_alpha_0.1": {
-      "refusal_rate": 68.0,
-      "perplexity": 10.101060635877259
-    },
-    "subspace_alpha_0.2": {
-      "refusal_rate": 70.0,
-      "perplexity": 10.084421856878222
-    },
-    "subspace_alpha_0.3": {
-      "refusal_rate": 68.0,
-      "perplexity": 10.094192368825682
-    },
-    "subspace_alpha_0.4": {
-      "refusal_rate": 68.0,
-      "perplexity": 10.134647135380261
-    },
-    "subspace_alpha_0.5": {
-      "refusal_rate": 64.0,
-      "perplexity": 10.23267511910305
-    },
-    "subspace_alpha_0.6": {
-      "refusal_rate": 56.00000000000001,
-      "perplexity": 10.362646321129242
-    },
-    "subspace_alpha_0.7": {
-      "refusal_rate": 50.0,
-      "perplexity": 10.553772485478348
-    },
-    "subspace_alpha_0.8": {
-      "refusal_rate": 48.0,
-      "perplexity": 10.75883285075351
-    },
-    "subspace_alpha_0.9": {
-      "refusal_rate": 28.000000000000004,
-      "perplexity": 10.989310922018456
-    },
-    "subspace_alpha_1.0": {
-      "refusal_rate": 18.0,
-      "perplexity": 11.20402708000428
-    }
+    "single": [
+      {
+        "alpha": 0.0,
+        "refusal_rate": 70.0,
+        "perplexity": 10.12
+      },
+      {
+        "alpha": 0.1,
+        "refusal_rate": 68.0,
+        "perplexity": 10.11
+      },
+      {
+        "alpha": 0.2,
+        "refusal_rate": 68.0,
+        "perplexity": 10.11
+      },
+      {
+        "alpha": 0.3,
+        "refusal_rate": 68.0,
+        "perplexity": 10.1
+      },
+      {
+        "alpha": 0.4,
+        "refusal_rate": 66.0,
+        "perplexity": 10.1
+      },
+      {
+        "alpha": 0.5,
+        "refusal_rate": 66.0,
+        "perplexity": 10.09
+      },
+      {
+        "alpha": 0.6,
+        "refusal_rate": 66.0,
+        "perplexity": 10.09
+      },
+      {
+        "alpha": 0.7,
+        "refusal_rate": 64.0,
+        "perplexity": 10.08
+      },
+      {
+        "alpha": 0.8,
+        "refusal_rate": 64.0,
+        "perplexity": 10.08
+      },
+      {
+        "alpha": 0.9,
+        "refusal_rate": 62.0,
+        "perplexity": 10.08
+      },
+      {
+        "alpha": 1.0,
+        "refusal_rate": 62.0,
+        "perplexity": 10.08
+      }
+    ],
+    "subspace": [
+      {
+        "alpha": 0.0,
+        "refusal_rate": 70.0,
+        "perplexity": 10.12
+      },
+      {
+        "alpha": 0.1,
+        "refusal_rate": 68.0,
+        "perplexity": 10.1
+      },
+      {
+        "alpha": 0.2,
+        "refusal_rate": 70.0,
+        "perplexity": 10.08
+      },
+      {
+        "alpha": 0.3,
+        "refusal_rate": 68.0,
+        "perplexity": 10.09
+      },
+      {
+        "alpha": 0.4,
+        "refusal_rate": 68.0,
+        "perplexity": 10.13
+      },
+      {
+        "alpha": 0.5,
+        "refusal_rate": 64.0,
+        "perplexity": 10.23
+      },
+      {
+        "alpha": 0.6,
+        "refusal_rate": 56.0,
+        "perplexity": 10.36
+      },
+      {
+        "alpha": 0.7,
+        "refusal_rate": 50.0,
+        "perplexity": 10.55
+      },
+      {
+        "alpha": 0.8,
+        "refusal_rate": 48.0,
+        "perplexity": 10.76
+      },
+      {
+        "alpha": 0.9,
+        "refusal_rate": 28.0,
+        "perplexity": 10.99
+      },
+      {
+        "alpha": 1.0,
+        "refusal_rate": 18.0,
+        "perplexity": 11.2
+      }
+    ]
   }
 }
